@@ -3,14 +3,17 @@
   /* Includes the header in the wrapper code */
 #include "phonon.h"
 #include "phonon_version.h"
-  %}
+%}
 
-  %include "enums.swg"
-  %include "arrays_java.i";
-  %javaconst(1);
+%include "enums.swg"
+%include "arrays_java.i"
+%include "cpointer.i"
+%javaconst(1);
 
-  %apply bool { enum IPLbool };
-
+%apply bool { enum IPLbool };
+%apply int[] {int *};
+%apply float[] {float *};
+%pointer_functions(void *, IPLHandle);
 
 %extend IPLVector3 {
   IPLVector3(int x, int y, int z) {
