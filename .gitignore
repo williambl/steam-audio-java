@@ -1,3 +1,4 @@
 *.h
 .*.un~
 generated/
+phonon_wrap.c
