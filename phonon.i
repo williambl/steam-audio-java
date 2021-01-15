@@ -61,33 +61,34 @@
 }
 %typemap(freearg) float * ""
 
+/*
 %extend IPLVector3 {
   IPLVector3(int x, int y, int z) {
-    $self->x = x;
-    $self->y = y;
-    $self->z = z;
+    $this->x = x;
+    $this->y = y;
+    $this->z = z;
   }
 }
 
 %extend IPLBox {
   IPLBox(IPLVector3 minCoords, IPLVector3 maxCoords) {
-    $self->minCoordinates = minCoords;
-    $self->maxCoordinates = maxCoords;
+    $this->minCoordinates = minCoords;
+    $this->maxCoordinates = maxCoords;
   }
 }
 
 %extend IPLSphere {
   IPLSphere(IPLVector3 center, IPLfloat32 radius) {
-    $self->center = center;
-    $self->radius = radius;
+    $this->center = center;
+    $this->radius = radius;
   }
 }
 
 %extend IPLComputeDeviceFilter {
   IPLComputeDeviceFilter(IPLComputeDeviceType type, IPLint32 maxCUsToReserve, IPLfloat32 fractionCUsForIRUpdate) {
-    $self->type = type;
-    $self->maxCUsToReserve = maxCUsToReserve;
-    $self->fractionCUsForIRUpdate = fractionCUsForIRUpdate;
+    $this->type = type;
+    $this->maxCUsToReserve = maxCUsToReserve;
+    $this->fractionCUsForIRUpdate = fractionCUsForIRUpdate;
   }
 }
 
@@ -105,23 +106,49 @@
       IPLint32            bakingBatchSize,
       IPLfloat32          irradianceMinDistance
       ) {
-    self->sceneType = sceneType;
-    self->maxNumOcclusionSamples = maxNumOcclusionSamples;
-    self->numRays = numRays;
-    self->numDiffuseSamples = numDiffuseSamples;
-    self->numBounces = numBounces;
-    self->numThreads = numThreads;
-    self->irDuration = irDuration;
-    self->ambisonicsOrder = ambisonicsOrder;
-    self->maxConvolutionSources = maxConvolutionSources;
-    self->bakingBatchSize = bakingBatchSize;
-    self->irradianceMinDistance = irradianceMinDistance;
+    this->sceneType = sceneType;
+    this->maxNumOcclusionSamples = maxNumOcclusionSamples;
+    this->numRays = numRays;
+    this->numDiffuseSamples = numDiffuseSamples;
+    this->numBounces = numBounces;
+    this->numThreads = numThreads;
+    this->irDuration = irDuration;
+    this->ambisonicsOrder = ambisonicsOrder;
+    this->maxConvolutionSources = maxConvolutionSources;
+    this->bakingBatchSize = bakingBatchSize;
+    this->irradianceMinDistance = irradianceMinDistance;
+  }
+}
+
+%extend IPLSimulationSettings {
+  IPLSimulationSettings(
+      IPLSceneType sceneType,
+      IPLint32 maxNumOcclusionSamples,
+      IPLint32            numRays,
+      IPLint32            numDiffuseSamples,
+      IPLint32            numBounces,
+      IPLint32            numThreads,
+      IPLfloat32          irDuration,
+      IPLint32            ambisonicsOrder,
+      IPLint32            maxConvolutionSources,
+      IPLfloat32          irradianceMinDistance
+      ) {
+    this->sceneType = sceneType;
+    this->maxNumOcclusionSamples = maxNumOcclusionSamples;
+    this->numRays = numRays;
+    this->numDiffuseSamples = numDiffuseSamples;
+    this->numBounces = numBounces;
+    this->numThreads = numThreads;
+    this->irDuration = irDuration;
+    this->ambisonicsOrder = ambisonicsOrder;
+    this->maxConvolutionSources = maxConvolutionSources;
+    this->irradianceMinDistance = irradianceMinDistance;
   }
 }
 
 %extend IPLTriangle {
   IPLTriangle(IPLint32 indices[]) {
-    self->indices = indices;
+    this->indices = indices;
   }
 }
 
@@ -135,27 +162,27 @@
       IPLfloat32 midFreqTransmission,
       IPLfloat32 highFreqTransmission
       ) {
-    self->lowFreqAbsorption = lowFreqAbsorption;
-    self->midFreqAbsorption = midFreqAbsorption;
-    self->highFreqAbsorption = highFreqAbsorption;
-    self->scattering = scattering;
-    self->lowFreqTransmission = lowFreqTransmission;
-    self->midFreqTransmission = midFreqTransmission;
-    self->highFreqTransmission = highFreqTransmission;
+    this->lowFreqAbsorption = lowFreqAbsorption;
+    this->midFreqAbsorption = midFreqAbsorption;
+    this->highFreqAbsorption = highFreqAbsorption;
+    this->scattering = scattering;
+    this->lowFreqTransmission = lowFreqTransmission;
+    this->midFreqTransmission = midFreqTransmission;
+    this->highFreqTransmission = highFreqTransmission;
   }
 }
 
 %extend IPLMatrix4x4 {
   IPLMatrix4x4(float elements[][]) {
-    self->elements = elements;
+    this->elements = elements;
   }
 }
 
 %extend IPLRenderingSettings {
   IPLRenderingSettings(IPLint32 samplingRate, IPLint32 frameSize, IPLConvolutionType convolutionType) {
-    self->samplingRate = samplingRate;
-    self->frameSize = frameSize;
-    self->convolutionType = convolutionType;
+    this->samplingRate = samplingRate;
+    this->frameSize = frameSize;
+    this->convolutionType = convolutionType;
   }
 }
 
@@ -170,31 +197,93 @@
       IPLAmbisonicsNormalization  ambisonicsNormalization,
       IPLChannelOrder             channelOrder
       ) {
-    self->channelLayoutType = channelLayoutType;
-    self->channelLayout = channelLayout;
-    self->numSpeakers = numSpeakers;
-    self->speakerDirections = speakerDirections;
-    self->ambisonicsOrder = ambisonicsOrder;
-    self->ambisonicsOrdering = ambisonicsOrdering;
-    self->ambisonicsNormalization = ambisonicsNormalization;
-    self->channelOrder = channelOrder;
+    this->channelLayoutType = channelLayoutType;
+    this->channelLayout = channelLayout;
+    this->numSpeakers = numSpeakers;
+    this->speakerDirections = speakerDirections;
+    this->ambisonicsOrder = ambisonicsOrder;
+    this->ambisonicsOrdering = ambisonicsOrdering;
+    this->ambisonicsNormalization = ambisonicsNormalization;
+    this->channelOrder = channelOrder;
+  }
+}
+
+%extend IPLAudioFormat {
+  IPLAudioFormat(
+      IPLChannelLayoutType        channelLayoutType,
+      IPLChannelLayout            channelLayout,
+      IPLChannelOrder             channelOrder
+      ) {
+    this->channelLayoutType = channelLayoutType;
+    this->channelLayout = channelLayout;
+    this->channelOrder = channelOrder;
+  }
+}
+
+%extend IPLAudioFormat {
+  IPLAudioFormat(
+      IPLChannelLayoutType        channelLayoutType,
+      IPLChannelLayout            channelLayout,
+      IPLint32                    numSpeakers,
+      IPLVector3*                 speakerDirections,
+      IPLChannelOrder             channelOrder
+      ) {
+    this->channelLayoutType = channelLayoutType;
+    this->channelLayout = channelLayout;
+    this->numSpeakers = numSpeakers;
+    this->speakerDirections = speakerDirections;
+    this->channelOrder = channelOrder;
+  }
+}
+
+%extend IPLAudioFormat {
+  IPLAudioFormat(
+      IPLChannelLayoutType        channelLayoutType,
+      IPLint32                    ambisonicsOrder,
+      IPLAmbisonicsOrdering       ambisonicsOrdering,
+      IPLAmbisonicsNormalization  ambisonicsNormalization,
+      IPLChannelOrder             channelOrder
+      ) {
+    this->channelLayoutType = channelLayoutType;
+    this->ambisonicsOrder = ambisonicsOrder;
+    this->ambisonicsOrdering = ambisonicsOrdering;
+    this->ambisonicsNormalization = ambisonicsNormalization;
+    this->channelOrder = channelOrder;
   }
 }
 
 %extend IPLAudioBuffer {
   IPLAudioBuffer(IPLAudioFormat format, IPLint32 numSamples, IPLfloat32* interleavedBuffer, IPLfloat32** deinterleavedBuffer) {
-    self->format = format;
-    self->numSamples = numSamples;
-    self->interleavedBuffer = interleavedBuffer;
-    self->deinterleavedBuffer = deinterleavedBuffer;
+    this->format = format;
+    this->numSamples = numSamples;
+    this->interleavedBuffer = interleavedBuffer;
+    this->deinterleavedBuffer = deinterleavedBuffer;
+  }
+}
+
+%extend IPLAudioBuffer {
+  IPLAudioBuffer(IPLAudioFormat format, IPLint32 numSamples, IPLfloat32** deinterleavedBuffer) {
+    this->format = format;
+    this->numSamples = numSamples;
+    this->interleavedBuffer = NULL;
+    this->deinterleavedBuffer = deinterleavedBuffer;
+  }
+}
+
+%extend IPLAudioBuffer {
+  IPLAudioBuffer(IPLAudioFormat format, IPLint32 numSamples, IPLfloat32* interleavedBuffer) {
+    this->format = format;
+    this->numSamples = numSamples;
+    this->interleavedBuffer = interleavedBuffer;
+    this->deinterleavedBuffer = NULL;
   }
 }
 
 %extend IPLHrtfParams {
   IPLHrtfParams(IPLHrtfDatabaseType type, IPLbyte* hrtfData, IPLstring sofaFileName) {
-    self->type = type;
-    self->hrtfData = hrtfData;
-    self-> sofaFileName;
+    this->type = type;
+    this->hrtfData = hrtfData;
+    this-> sofaFileName;
   }
 }
 
@@ -206,10 +295,33 @@
   void* userData,
   IPLbool dirty
   ) {
-  self->type = type;
-  self->minDistance = minDistance;
-  self->callback = callback;
-  self->dirty = dirty;
+  this->type = type;
+  this->minDistance = minDistance;
+  this->callback = callback;
+  this->dirty = dirty;
+  }
+}
+
+%extend IPLDistanceAttenuationModel {
+  IPLDistanceAttenuationModel(
+  IPLDistanceAttenuationModelType type,
+  IPLDistanceAttenuationCallback callback,
+  void* userData,
+  IPLbool dirty
+  ) {
+  this->type = type;
+  this->callback = callback;
+  this->dirty = dirty;
+  }
+}
+
+%extend IPLDistanceAttenuationModel {
+  IPLDistanceAttenuationModel(
+  IPLDistanceAttenuationModelType type,
+  IPLfloat32 minDistance
+  ) {
+  this->type = type;
+  this->minDistance = minDistance;
   }
 }
 
@@ -221,13 +333,35 @@
   void* userData,
   IPLbool dirty
   ) {
-  self->type = type;
-  self->coefficients = coefficients;
-  self->callback = callback;
-  self->dirty = dirty;
+  this->type = type;
+  this->coefficients = coefficients;
+  this->callback = callback;
+  this->dirty = dirty;
   }
 }
 
+%extend IPLAirAbsorptionModel {
+  IPLAirAbsorptionModel(
+  IPLAirAbsorptionModelType type,
+  IPLfloat32 coefficients[]
+  ) {
+  this->type = type;
+  this->coefficients = coefficients;
+  }
+}
+
+%extend IPLAirAbsorptionModel {
+  IPLAirAbsorptionModel(
+  IPLAirAbsorptionModelType type,
+  IPLAirAbsorptionCallback callback,
+  void* userData,
+  IPLbool dirty
+  ) {
+  this->type = type;
+  this->callback = callback;
+  this->dirty = dirty;
+  }
+}
 %extend IPLDirectSoundPath {
   IPLDirectSoundPath(
   IPLVector3 direction,
@@ -238,13 +372,13 @@
   IPLfloat32 transmissionFactor[],
   IPLfloat32 directivityFactor
   ) {
-  self->direction = direction;
-  self->distanceAttenuation = distanceAttenuation;
-  self->airAbsorption = airAbsorption;
-  self->propagationDelay = propagationDelay;
-  self->occlusionFactor = occlusionFactor;
-  self->transmissionFactor = transmissionFactor;
-  self->directivityFactor = directivityFactor;
+  this->direction = direction;
+  this->distanceAttenuation = distanceAttenuation;
+  this->airAbsorption = airAbsorption;
+  this->propagationDelay = propagationDelay;
+  this->occlusionFactor = occlusionFactor;
+  this->transmissionFactor = transmissionFactor;
+  this->directivityFactor = directivityFactor;
   }
 }
 
@@ -255,9 +389,9 @@
   IPLDirectivityCallback callback,
   void* userData
   ) {
-  self->dipoleWeight = dipoleWeight;
-  self->dipolePower = dipolePower;
-  self->callback = callback;
+  this->dipoleWeight = dipoleWeight;
+  this->dipolePower = dipolePower;
+  this->callback = callback;
   }
 }
 
@@ -271,13 +405,13 @@
   IPLDistanceAttenuationModel distanceAttenuationModel,
   IPLAirAbsorptionModel airAbsorptionModel
   ) {
-  self->position = position;
-  self->ahead = ahead;
-  self->up = up;
-  self->right = right;
-  self->directivity = directivity;
-  self->distanceAttenuationModel = distanceAttenuationModel;
-  self->airAbsorptionModel = airAbsorptionModel;
+  this->position = position;
+  this->ahead = ahead;
+  this->up = up;
+  this->right = right;
+  this->directivity = directivity;
+  this->distanceAttenuationModel = distanceAttenuationModel;
+  this->airAbsorptionModel = airAbsorptionModel;
   }
 }
 
@@ -288,17 +422,17 @@
   IPLbool applyDirectivity,
   IPLDiretOcclusionMode directOcclusionMode
   ) {
-  self->applyDistanceAttenuation = applyDistanceAttenuation;
-  self->applyAirAbsorption = applyAirAbsorption;
-  self->applyDirectivity = applyDirectivity;
-  self->directOcclusionMode = directOcclusionMode;
+  this->applyDistanceAttenuation = applyDistanceAttenuation;
+  this->applyAirAbsorption = applyAirAbsorption;
+  this->applyDirectivity = applyDirectivity;
+  this->directOcclusionMode = directOcclusionMode;
   }
 }
 
 %extend IPLBakedDataIdentifier {
   IPLBakedDataIdentifier(IPLint32 identifier, IPLBakedDataType type) {
-    self->identifier = identifier;
-    self->type = type;
+    this->identifier = identifier;
+    this->type = type;
   }
 }
 
@@ -310,11 +444,11 @@
   IPLint32 maxOctreeTriangles,
   IPLint32 maxOctreeDepth
   ) {
-    self->placement = placement;
-    self->spacing = spacing;
-    self->heightAboveFloor = heightAboveFloor;
-    self->maxOctreeTriangles = maxOctreeTriangles;
-    self->maxOctreeDepth = maxOctreeDepth;
+    this->placement = placement;
+    this->spacing = spacing;
+    this->heightAboveFloor = heightAboveFloor;
+    this->maxOctreeTriangles = maxOctreeTriangles;
+    this->maxOctreeDepth = maxOctreeDepth;
   }
 }
 
@@ -324,12 +458,12 @@
   IPLbool bakeConvolution,
   IPLfloat32 irDurationForBake
   ) {
-    self->bakeParametric = bakeParametric;
-    self->bakeConvolution = bakeConvolution;
-    self->irDurationForBake = irDurationForBake;
+    this->bakeParametric = bakeParametric;
+    this->bakeConvolution = bakeConvolution;
+    this->irDurationForBake = irDurationForBake;
   }
 }
-
+*/
 /* Parse the header file to generate wrappers */
 %include "phonon.h"
 %include "phonon_version.h"
