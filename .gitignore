@@ -2,3 +2,5 @@
 .*.un~
 generated/
 phonon_wrap.c
+*.so
+*.o
