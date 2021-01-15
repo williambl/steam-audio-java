@@ -3,6 +3,8 @@
   /* Includes the header in the wrapper code */
 #include "phonon.h"
 #include "phonon_version.h"
+#define true 1
+#define false 0
 %}
 
 %include "enums.swg"
