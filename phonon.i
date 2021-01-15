@@ -11,9 +11,53 @@
 %javaconst(1);
 
 %apply bool { enum IPLbool };
-%apply int[] {int *};
-%apply float[] {float *};
 %pointer_functions(void *, IPLHandle);
+
+%typemap(jni) int * "jobject"
+%typemap(jtype) int * "java.nio.IntBuffer"
+%typemap(jstype) int * "java.nio.IntBuffer"
+%typemap(javain,
+  pre="  assert $javainput.isDirect() : \"Buffer must be allocated direct.\";") int * "$javainput"
+%typemap(javaout) int * {
+  return $jnicall;
+}
+%typemap(in) int * {
+  $1 = (int *) JCALL1(GetDirectBufferAddress, jenv, $input);
+  if ($1 == NULL) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaRuntimeException, "Unable to get address of a java.nio.IntBuffer direct byte buffer. Buffer must be a direct buffer and not a non-direct buffer.");
+  }
+}
+%typemap(memberin) int * {
+  if ($input) {
+    $1 = $input;
+  } else {
+    $1 = 0;
+  }
+}
+%typemap(freearg) int * ""
+
+%typemap(jni) float * "jobject"
+%typemap(jtype) float * "java.nio.FloatBuffer"
+%typemap(jstype) float * "java.nio.FloatBuffer"
+%typemap(javain,
+  pre="  assert $javainput.isDirect() : \"Buffer must be allocated direct.\";") float * "$javainput"
+%typemap(javaout) float * {
+  return $jnicall;
+}
+%typemap(in) float * {
+  $1 = (float *) JCALL1(GetDirectBufferAddress, jenv, $input);
+  if ($1 == NULL) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaRuntimeException, "Unable to get address of a java.nio.FloatBuffer direct byte buffer. Buffer must be a direct buffer and not a non-direct buffer.");
+  }
+}
+%typemap(memberin) float * {
+  if ($input) {
+    $1 = $input;
+  } else {
+    $1 = 0;
+  }
+}
+%typemap(freearg) float * ""
 
 %extend IPLVector3 {
   IPLVector3(int x, int y, int z) {
